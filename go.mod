@@ -1,4 +1,4 @@
-module github.com/bradfordwagner/gh-template-go-lib
+module github.com/bradfordwagner/go-util
 
 go 1.19
 

@@ -7,7 +7,6 @@ import (
 )
 
 var _ = Describe("If", func() {
-	It("t", func() { Expect(true).To(BeTrue()) })
 	It("true, returns first value", func() {
 		a, b := 1, 2
 		res := util.If(true, a, b)

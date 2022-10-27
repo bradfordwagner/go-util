@@ -1,4 +1,4 @@
-package template
+package util
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestTemplate(t *testing.T) {
+func TestUtil(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Template Suite")
+	RunSpecs(t, "Util Suite")
 }

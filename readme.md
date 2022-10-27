@@ -1,3 +1,3 @@
-# gh-template-go-lib
-Template for creating go repositories
+# go-util
+Helper utility functions
 

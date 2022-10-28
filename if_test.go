@@ -1,4 +1,4 @@
-package util_test
+package bwutil_test
 
 import (
 	"github.com/bradfordwagner/go-util"
@@ -9,12 +9,12 @@ import (
 var _ = Describe("If", func() {
 	It("true, returns first value", func() {
 		a, b := 1, 2
-		res := util.If(true, a, b)
+		res := bwutil.If(true, a, b)
 		Expect(res).To(Equal(a))
 	})
 	It("false, returns second value", func() {
 		a, b := 1, 2
-		res := util.If(false, a, b)
+		res := bwutil.If(false, a, b)
 		Expect(res).To(Equal(b))
 	})
 })

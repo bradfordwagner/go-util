@@ -1,4 +1,4 @@
-package util_test
+package bwutil_test
 
 import (
 	"github.com/bradfordwagner/go-util"
@@ -9,12 +9,12 @@ import (
 var _ = Describe("Pointer", func() {
 	It("strings", func() {
 		v := "hi friends"
-		p := util.Pointer(v)
+		p := bwutil.Pointer(v)
 		Expect(*p).To(Equal(v))
 	})
 	It("ints", func() {
 		v := 1234
-		p := util.Pointer(v)
+		p := bwutil.Pointer(v)
 		Expect(*p).To(Equal(v))
 	})
 })

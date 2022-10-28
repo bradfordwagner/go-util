@@ -1,4 +1,4 @@
-package util_test
+package bwutil_test
 
 import (
 	"github.com/bradfordwagner/go-util"
@@ -15,7 +15,7 @@ var _ = Describe("Map", func() {
 				1: 1,
 				2: 2,
 			}
-			cp := util.MapCopy(orig)
+			cp := bwutil.MapCopy(orig)
 			Expect(reflect.DeepEqual(orig, cp)).To(BeTrue())
 
 			// altering the cp doesn't affect the orig

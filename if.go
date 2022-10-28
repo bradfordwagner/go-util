@@ -1,4 +1,4 @@
-package util
+package bwutil
 
 func If[T any](check bool, t, f T) (v T) {
 	v = f

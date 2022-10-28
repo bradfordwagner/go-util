@@ -1,4 +1,4 @@
-package util
+package bwutil
 
 // MapCopy - duplicate a map into a new one
 func MapCopy[k comparable, v any](m map[k]v) (res map[k]v) {

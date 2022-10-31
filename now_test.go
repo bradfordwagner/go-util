@@ -1,7 +1,7 @@
 package bwutil_test
 
 import (
-	bwutil "github.com/bradfordwagner/go-util"
+	"github.com/bradfordwagner/go-util"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"time"

@@ -1,6 +1,6 @@
 before:
   hooks:
-    - go test ./...
+    - make test
 builds:
 - skip: true
 changelog:
@@ -9,4 +9,3 @@ changelog:
     exclude:
     - '^docs:'
     - '^test:'
-

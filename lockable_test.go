@@ -8,16 +8,40 @@ import (
 
 var _ = Describe("Lockable", func() {
 	It("creates a lockable", func() {
-		l := bwutil.NewLockable("abcd")
+		l := bwutil.NewLockableWithValue("abcd")
 		Expect(l).ToNot(BeNil())
 		Expect(l.Get()).To(Equal("abcd"))
 	})
 	It("sets the value", func() {
-		l := bwutil.NewLockable("abcd")
+		l := bwutil.NewLockableWithValue("abcd")
 		Expect(l).ToNot(BeNil())
 		Expect(l.Get()).To(Equal("abcd"))
 
 		l.Set("hi")
 		Expect(l.Get()).To(Equal("hi"))
+	})
+
+	It("creates a lockable without a value set (string)", func() {
+		l := bwutil.NewLockable[string]()
+		Expect(l).ToNot(BeNil())
+		Expect(l.Get()).To(Equal(""))
+	})
+
+	type mystruct struct {
+		s string
+	}
+	It("creates a lockable without a value set (struct)", func() {
+		l := bwutil.NewLockable[mystruct]()
+		Expect(l).ToNot(BeNil())
+		Expect(l.Get()).To(Equal(mystruct{}))
+
+		v := mystruct{s: "abcd"}
+		l.Set(v)
+		Expect(l.Get()).To(Equal(v))
+	})
+	It("creates a lockable without a value set (*struct)", func() {
+		l := bwutil.NewLockable[*mystruct]()
+		Expect(l).ToNot(BeNil())
+		Expect(l.Get()).To(BeNil())
 	})
 })

@@ -8,11 +8,18 @@ type Lockable[T any] struct {
 	m      *sync.RWMutex
 }
 
-// NewLockable - creates a new lockable object of type t
-func NewLockable[T any](object T) *Lockable[T] {
+// NewLockableWithValue - creates a new lockable object of type t
+func NewLockableWithValue[T any](object T) *Lockable[T] {
 	return &Lockable[T]{
 		object: object,
 		m:      new(sync.RWMutex),
+	}
+}
+
+// NewLockable - creates a new lockable object of type t
+func NewLockable[T any]() *Lockable[T] {
+	return &Lockable[T]{
+		m: new(sync.RWMutex),
 	}
 }
 

@@ -36,3 +36,14 @@ func (s *Set[T]) Size() int {
 func (s *Set[T]) IsEmpty() bool {
 	return s.Size() == 0
 }
+
+// Keyset - returns the keyset as a slice of t
+func (s *Set[T]) Keyset() (res []T) {
+	res = make([]T, len(s.v))
+	var i int
+	for k := range s.v {
+		res[i] = k
+		i++
+	}
+	return
+}

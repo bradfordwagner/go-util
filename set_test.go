@@ -13,6 +13,7 @@ var _ = Describe("Set", func() {
 		// initially no items
 		Expect(s.IsEmpty()).To(BeTrue())
 		Expect(s.Size()).To(BeZero())
+		Expect(s.Keyset()).To(BeEquivalentTo([]string{}))
 
 		// test add
 		Expect(s.Exists("a")).To(BeFalse())
@@ -20,10 +21,20 @@ var _ = Describe("Set", func() {
 		Expect(s.Exists("a")).To(BeTrue())
 		Expect(s.Size()).To(Equal(1))
 		Expect(s.IsEmpty()).To(BeFalse())
+		Expect(s.Keyset()).To(BeEquivalentTo([]string{"a"}))
 
-		// test remove
+		// second add
+		Expect(s.Exists("b")).To(BeFalse())
+		s.Add("b")
+		Expect(s.Exists("b")).To(BeTrue())
+		Expect(s.Size()).To(Equal(2))
+		Expect(s.IsEmpty()).To(BeFalse())
+		Expect(s.Keyset()).To(BeEquivalentTo([]string{"a", "b"}))
+
+		// test remove of a, leaving b
 		s.Remove("a")
 		Expect(s.Exists("a")).To(BeFalse())
-		Expect(s.IsEmpty()).To(BeTrue())
+		Expect(s.IsEmpty()).To(BeFalse())
+		Expect(s.Keyset()).To(BeEquivalentTo([]string{"b"}))
 	})
 })

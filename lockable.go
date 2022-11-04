@@ -31,10 +31,14 @@ func (l *Lockable[T]) Set(obj T) {
 }
 
 // SetF - sets the value of the lockable by invoking a function
-func (l *Lockable[T]) SetF(f func() T) {
+func (l *Lockable[T]) SetF(f func() (T, error)) error {
 	l.m.Lock()
 	defer l.m.Unlock()
-	l.object = f()
+	t, err := f()
+	if err == nil {
+		l.object = t
+	}
+	return err
 }
 
 // Get - gets the value from Lockable

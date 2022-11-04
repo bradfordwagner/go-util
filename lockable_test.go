@@ -44,4 +44,15 @@ var _ = Describe("Lockable", func() {
 		Expect(l).ToNot(BeNil())
 		Expect(l.Get()).To(BeNil())
 	})
+
+	Context("SetF", func() {
+		It("sets using function", func() {
+			l := bwutil.NewLockable[string]()
+			Expect(l.Get()).To(Equal(""))
+			l.SetF(func() string {
+				return "hi friends"
+			})
+			Expect(l.Get()).To(Equal("hi friends"))
+		})
+	})
 })

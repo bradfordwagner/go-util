@@ -26,3 +26,13 @@ func (s *Set[T]) Exists(t T) bool {
 	ok, _ := s.v[t]
 	return ok
 }
+
+// Size - returns the num of elements in the set
+func (s *Set[T]) Size() int {
+	return len(s.v)
+}
+
+// IsEmpty - tells if the set is Empty
+func (s *Set[T]) IsEmpty() bool {
+	return s.Size() == 0
+}

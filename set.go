@@ -11,6 +11,15 @@ func NewSet[T comparable]() *Set[T] {
 	return &Set[T]{v: v}
 }
 
+// NewSetFromSlice - builds a set from a slice
+func NewSetFromSlice[T comparable](s []T) *Set[T] {
+	set := NewSet[T]()
+	for _, t := range s {
+		set.Add(t)
+	}
+	return set
+}
+
 // Add - adds a value to the set
 func (s *Set[T]) Add(t T) {
 	s.v[t] = true

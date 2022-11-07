@@ -37,4 +37,14 @@ var _ = Describe("Set", func() {
 		Expect(s.IsEmpty()).To(BeFalse())
 		Expect(s.Keyset()).To(BeEquivalentTo([]string{"b"}))
 	})
+
+	It("creates a set from slice", func() {
+		s := []int{1, 2, 3, 4}
+		set := bwutil.NewSetFromSlice(s)
+		Expect(set.Size()).To(Equal(len(s)))
+
+		s = []int{1, 1, 2, 3}
+		set = bwutil.NewSetFromSlice(s)
+		Expect(set.Size()).To(Equal(3))
+	})
 })

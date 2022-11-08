@@ -47,4 +47,104 @@ var _ = Describe("Set", func() {
 		set = bwutil.NewSetFromSlice(s)
 		Expect(set.Size()).To(Equal(3))
 	})
+
+	It("difference", func() {
+		type args struct {
+			a, b, res []int
+		}
+		test := func(arg args) {
+			a, b, expected := bwutil.NewSetFromSlice(arg.a), bwutil.NewSetFromSlice(arg.b), bwutil.NewSetFromSlice(arg.res)
+			res := a.Difference(b)
+			Expect(res.Keyset()).To(ConsistOf(expected.Keyset()))
+		}
+
+		// run tests
+		test(args{
+			a:   []int{1, 2, 3},
+			b:   []int{2, 3},
+			res: []int{1},
+		})
+		test(args{
+			a:   []int{1, 2, 3},
+			b:   []int{1, 2},
+			res: []int{3},
+		})
+		test(args{
+			a:   []int{},
+			b:   []int{1, 2},
+			res: []int{},
+		})
+		test(args{
+			a:   []int{1, 2, 3},
+			b:   []int{},
+			res: []int{1, 2, 3},
+		})
+	})
+
+	It("equals", func() {
+		type args struct {
+			a, b []int
+			res  bool
+		}
+		test := func(arg args) {
+			a, b := bwutil.NewSetFromSlice(arg.a), bwutil.NewSetFromSlice(arg.b)
+			eq := a.Equals(b)
+			Expect(eq).To(Equal(arg.res))
+		}
+
+		// run tests
+		test(args{
+			a:   []int{1, 2, 3},
+			b:   []int{2},
+			res: false,
+		})
+		test(args{
+			a:   []int{1, 2, 3},
+			b:   []int{2, 3, 4},
+			res: false,
+		})
+		test(args{
+			a:   []int{1, 2, 3},
+			b:   []int{1, 2, 3},
+			res: true,
+		})
+		test(args{
+			a:   []int{1, 2, 3},
+			b:   []int{1, 2, 3, 4},
+			res: false,
+		})
+	})
+
+	It("remove all", func() {
+		type args struct {
+			a, b, res []int
+		}
+		test := func(arg args) {
+			a := bwutil.NewSetFromSlice(arg.a)
+			a.RemoveAll(arg.b)
+			Expect(a.Keyset()).To(ConsistOf(arg.res))
+		}
+
+		// run tests
+		test(args{
+			a:   []int{1, 2, 3},
+			b:   []int{2, 3},
+			res: []int{1},
+		})
+		test(args{
+			a:   []int{1, 2, 3},
+			b:   []int{},
+			res: []int{1, 2, 3},
+		})
+		test(args{
+			a:   []int{1, 2, 3},
+			b:   []int{4, 5},
+			res: []int{1, 2, 3},
+		})
+		test(args{
+			a:   []int{},
+			b:   []int{4, 5},
+			res: []int{},
+		})
+	})
 })

@@ -30,6 +30,13 @@ func (s *Set[T]) Remove(t T) {
 	delete(s.v, t)
 }
 
+// RemoveAll - removes all elements of a slice from the set
+func (s *Set[T]) RemoveAll(t []T) {
+	for _, v := range t {
+		s.Remove(v)
+	}
+}
+
 // Exists - checks if a value exists in the set
 func (s *Set[T]) Exists(t T) bool {
 	ok, _ := s.v[t]
@@ -55,4 +62,36 @@ func (s *Set[T]) Keyset() (res []T) {
 		i++
 	}
 	return
+}
+
+// Copy - create a new copy of the set
+func (s *Set[T]) Copy() *Set[T] {
+	return NewSetFromSlice(s.Keyset())
+}
+
+// Difference - returns the elements which reside in the universal set, but not b
+func (s *Set[T]) Difference(b *Set[T]) (res *Set[T]) {
+	res = s.Copy()
+	for k := range s.v {
+		if b.Exists(k) {
+			res.Remove(k)
+		}
+	}
+	return
+}
+
+// Equals - checks two sets for equality
+func (s *Set[T]) Equals(b *Set[T]) (equals bool) {
+	equals = len(s.v) == len(b.v)
+	if !equals {
+		return
+	}
+
+	for k := range s.v {
+		equals = b.Exists(k)
+		if !equals {
+			return
+		}
+	}
+	return true
 }

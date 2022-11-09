@@ -1,5 +1,6 @@
 before:
   hooks:
+    - make initialize
     - make test
 builds:
 - skip: true

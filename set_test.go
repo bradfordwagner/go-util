@@ -147,4 +147,56 @@ var _ = Describe("Set", func() {
 			res: []int{},
 		})
 	})
+
+	It("exists all", func() {
+		type args struct {
+			values []int
+			set    []int
+		}
+		type res struct {
+			existsAll bool
+		}
+		var test = func(a args, r res) {
+			set := bwutil.NewSetFromSlice(a.set)
+			res := set.ExistsAll(a.values)
+			Expect(res).To(Equal(r.existsAll))
+		}
+
+		// run tests - truthy
+		test(args{
+			values: []int{1, 2, 3},
+			set:    []int{1, 2, 3},
+		}, res{existsAll: true})
+		test(args{
+			values: []int{1, 2, 2, 3},
+			set:    []int{1, 2, 3},
+		}, res{existsAll: true})
+		test(args{
+			values: []int{1},
+			set:    []int{1, 2, 3},
+		}, res{existsAll: true})
+		test(args{
+			values: []int{-1, 1, 2, 3},
+			set:    []int{-1, 1, 2, 3},
+		}, res{existsAll: true})
+		test(args{
+			values: []int{},
+			set:    []int{-1, 1, 2, 3},
+		}, res{existsAll: true})
+		test(args{
+			values: []int{},
+			set:    []int{},
+		}, res{existsAll: true})
+
+		// run tests - false
+		test(args{
+			values: []int{4},
+			set:    []int{1, 2, 3},
+		}, res{existsAll: false})
+		test(args{
+			values: []int{1},
+			set:    []int{},
+		}, res{existsAll: false})
+	})
+
 })

@@ -77,6 +77,53 @@ var _ = Describe("Matchers", func() {
 				},
 			}, res{})
 		})
+	})
+
+	It("NewMatcherConversionExploderOneOf", func() {
+		type value struct {
+			arr []int
+		}
+		type args struct {
+			values []value
+			set    []int
+		}
+		var test = func(a args) {
+			invoke := mock_bwutil.NewMockStubConversionOneOf(ctrl)
+			matcher := bwutil.NewMatcherConversionExploderOneOf(a.set, func(v value) []int {
+				return v.arr
+			})
+
+			invoke.EXPECT().Invoke(matcher).Times(len(a.values))
+
+			for _, v := range a.values {
+				invoke.Invoke(v)
+			}
+
+			ctrl.Finish()
+		}
+
+		// run tests
+		test(args{
+			values: []value{
+				{arr: []int{1, 2}},
+			},
+			set: []int{1, 2},
+		})
+		test(args{
+			values: []value{
+				{arr: []int{1, 2}},
+				{arr: []int{2, 1}},
+			},
+			set: []int{1, 2},
+		})
+		test(args{
+			values: []value{
+				{arr: []int{1, 2}},
+				{arr: []int{3, 4}},
+			},
+			set: []int{1, 2, 3, 4},
+		})
 
 	})
+
 })

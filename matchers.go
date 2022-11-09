@@ -55,3 +55,30 @@ func (c MatcherConversionOneOf[K, O]) String() string {
 }
 
 // end MatcherConversionOneOf
+
+// NewMatcherConversionExploderOneOf - allows converting into a type K from O - allows converting into a type K from O
+// then matching with an expected set of values of type K
+func NewMatcherConversionExploderOneOf[K comparable, O any](set []K, convert func(O) []K) MatcherConversionExploderOneOf[K, O] {
+	return MatcherConversionExploderOneOf[K, O]{
+		convert: convert,
+		set:     NewSetFromSlice(set),
+	}
+}
+
+type MatcherConversionExploderOneOf[K comparable, O any] struct {
+	convert func(O) []K
+	set     *Set[K]
+}
+
+func (c MatcherConversionExploderOneOf[K, O]) Matches(x interface{}) (ok bool) {
+	o, ok := x.(O)
+	if !ok {
+		return
+	}
+
+	return c.set.ExistsAll(c.convert(o))
+}
+
+func (c MatcherConversionExploderOneOf[K, O]) String() string {
+	return fmt.Sprintf("is one of %v", c.set.Keyset())
+}

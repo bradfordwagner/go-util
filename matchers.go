@@ -2,17 +2,18 @@ package bwutil
 
 import "fmt"
 
-func NewMatcherOneOf[T comparable](a []T) OneOfMatcher[T] {
-	return OneOfMatcher[T]{
+// NewMatcherOneOf - creates a matcher where we expect the value invoked to be OneOf the inputs of type T
+func NewMatcherOneOf[T comparable](a []T) MatcherOneOf[T] {
+	return MatcherOneOf[T]{
 		set: NewSetFromSlice(a),
 	}
 }
 
-type OneOfMatcher[T comparable] struct {
+type MatcherOneOf[T comparable] struct {
 	set *Set[T]
 }
 
-func (o OneOfMatcher[T]) Matches(x interface{}) (ok bool) {
+func (o MatcherOneOf[T]) Matches(x interface{}) (ok bool) {
 	t, ok := x.(T)
 	if !ok {
 		return
@@ -20,27 +21,27 @@ func (o OneOfMatcher[T]) Matches(x interface{}) (ok bool) {
 	return o.set.Exists(t)
 }
 
-func (o OneOfMatcher[T]) String() string {
+func (o MatcherOneOf[T]) String() string {
 	return fmt.Sprintf("is one of %v", o.set.Keyset())
 }
 
-// end OneOfMatcher
+// end MatcherOneOf
 
-// NewConversionOneOfMatcher - allows converting into a type K from O
+// NewMatcherConversionOneOf - allows converting into a type K from O
 // then matching with an expected set of values of type K
-func NewConversionOneOfMatcher[K comparable, O any](set []K, convert func(O) K) ConversionOneOfMatcher[K, O] {
-	return ConversionOneOfMatcher[K, O]{
+func NewMatcherConversionOneOf[K comparable, O any](set []K, convert func(O) K) MatcherConversionOneOf[K, O] {
+	return MatcherConversionOneOf[K, O]{
 		convert: convert,
 		set:     NewSetFromSlice(set),
 	}
 }
 
-type ConversionOneOfMatcher[K comparable, O any] struct {
+type MatcherConversionOneOf[K comparable, O any] struct {
 	convert func(O) K
 	set     *Set[K]
 }
 
-func (c ConversionOneOfMatcher[K, O]) Matches(x interface{}) (ok bool) {
+func (c MatcherConversionOneOf[K, O]) Matches(x interface{}) (ok bool) {
 	o, ok := x.(O)
 	if !ok {
 		return
@@ -49,6 +50,8 @@ func (c ConversionOneOfMatcher[K, O]) Matches(x interface{}) (ok bool) {
 	return c.set.Exists(c.convert(o))
 }
 
-func (c ConversionOneOfMatcher[K, O]) String() string {
+func (c MatcherConversionOneOf[K, O]) String() string {
 	return fmt.Sprintf("is one of %v", c.set.Keyset())
 }
+
+// end MatcherConversionOneOf

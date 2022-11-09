@@ -11,7 +11,7 @@ var _ = Describe("Matchers", func() {
 	var ctrl *gomock.Controller
 	BeforeEach(func() { ctrl = gomock.NewController(GinkgoT()) })
 
-	Context("OneOfMatcher", func() {
+	Context("MatcherOneOf", func() {
 		type args struct {
 			set        []int
 			invokeWith []int
@@ -44,7 +44,7 @@ var _ = Describe("Matchers", func() {
 		})
 	})
 
-	Context("ConversionOneOfMatcher", func() {
+	Context("MatcherConversionOneOf", func() {
 		type orig struct {
 			i int
 		}
@@ -56,7 +56,7 @@ var _ = Describe("Matchers", func() {
 		}
 		var test = func(a args, r res) {
 			invoke := mock_bwutil.NewMockStubConversionOneOf(ctrl)
-			matcher := bwutil.NewConversionOneOfMatcher(a.set, func(o orig) int {
+			matcher := bwutil.NewMatcherConversionOneOf(a.set, func(o orig) int {
 				return o.i
 			})
 

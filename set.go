@@ -37,6 +37,17 @@ func (s *Set[T]) RemoveAll(t []T) {
 	}
 }
 
+// ExistsAll - checks to see if all of the values exist in the set
+func (s *Set[T]) ExistsAll(tarr []T) bool {
+	for _, t := range tarr {
+		exists := s.Exists(t)
+		if !exists {
+			return false
+		}
+	}
+	return true
+}
+
 // Exists - checks if a value exists in the set
 func (s *Set[T]) Exists(t T) bool {
 	ok, _ := s.v[t]

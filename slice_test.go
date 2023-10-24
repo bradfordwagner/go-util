@@ -1,11 +1,12 @@
 package bwutil_test
 
 import (
-	. "github.com/onsi/ginkgo/v2"
-	. "github.com/onsi/gomega"
 	"strconv"
 
-	"github.com/bradfordwagner/go-util"
+	. "github.com/onsi/ginkgo/v2"
+	. "github.com/onsi/gomega"
+
+	bwutil "github.com/bradfordwagner/go-util"
 )
 
 var _ = Describe("Slice", func() {
@@ -15,6 +16,20 @@ var _ = Describe("Slice", func() {
 			b, _ = strconv.Atoi(a)
 			return
 		})
+		Expect(res).To(Equal(expected))
+	})
+
+	It("takes a struct and returns a map", func() {
+		type testStruct struct {
+			A string
+			B int
+		}
+		s := []testStruct{{"1", 1}, {"2", 2}, {"3", 3}}
+		expected := map[string]int{"1": 1, "2": 2, "3": 3}
+		res := bwutil.SliceToMap[testStruct, string, int](s, func(a testStruct) (k string, v int) {
+			return a.A, a.B
+		})
+
 		Expect(res).To(Equal(expected))
 	})
 })

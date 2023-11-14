@@ -2,13 +2,14 @@
 
 version: '3'
 
-
 tasks:
   default:
     cmds:
-      - watchexec -c -r -f "*.go" unbuffer task
-  test:
+      - watchexec -c -r -f "*.go" unbuffer task test
+  init:
     cmds:
       - go generate ./...
+  test:
+    cmds:
       - go test ./...
     silent: true

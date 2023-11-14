@@ -199,4 +199,37 @@ var _ = Describe("Set", func() {
 		}, res{existsAll: false})
 	})
 
+	It("add all", func() {
+		// testbed
+		type args struct {
+			initial, toAdd, res []int
+		}
+		test := func(arg args) {
+			a := bwutil.NewSetFromSlice(arg.initial)
+			a.AddAll(arg.toAdd)
+			Expect(a.Keyset()).To(ConsistOf(arg.res))
+		}
+
+		// assert
+		test(args{
+			initial: []int{1, 2, 3},
+			toAdd:   []int{4, 5, 6},
+			res:     []int{1, 2, 3, 4, 5, 6},
+		})
+		test(args{
+			initial: []int{1, 2, 3},
+			toAdd:   []int{1, 2, 3},
+			res:     []int{1, 2, 3},
+		})
+		test(args{
+			initial: []int{},
+			toAdd:   []int{},
+			res:     []int{},
+		})
+		test(args{
+			initial: []int{},
+			toAdd:   []int{1, 2, 3},
+			res:     []int{1, 2, 3},
+		})
+	})
 })

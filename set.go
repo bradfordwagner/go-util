@@ -25,6 +25,13 @@ func (s *Set[T]) Add(t T) {
 	s.v[t] = true
 }
 
+// AddAll - adds values to the set
+func (s *Set[T]) AddAll(t []T) {
+	for _, v := range t {
+		s.Add(v)
+	}
+}
+
 // Remove - removes a value from the set
 func (s *Set[T]) Remove(t T) {
 	delete(s.v, t)

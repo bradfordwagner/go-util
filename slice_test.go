@@ -26,10 +26,38 @@ var _ = Describe("Slice", func() {
 		}
 		s := []testStruct{{"1", 1}, {"2", 2}, {"3", 3}}
 		expected := map[string]int{"1": 1, "2": 2, "3": 3}
-		res := bwutil.SliceToMap[testStruct, string, int](s, func(a testStruct) (k string, v int) {
+		res := bwutil.SliceToMap(s, func(a testStruct) (k string, v int) {
 			return a.A, a.B
 		})
 
 		Expect(res).To(Equal(expected))
+	})
+
+	Context("SliceRemove", func() {
+		It("is an empty list", func() {
+			input, remove, expected := []string{}, "2", []string{}
+			res := bwutil.SliceRemove(input, remove)
+			Expect(res).To(Equal(expected))
+		})
+		It("contains the element and removes it", func() {
+			input, remove, expected := []string{"1", "2", "3"}, "2", []string{"1", "3"}
+			res := bwutil.SliceRemove(input, remove)
+			Expect(res).To(Equal(expected))
+		})
+		It("does not contains the element and does not remove anything", func() {
+			input, remove, expected := []string{"1", "3"}, "2", []string{"1", "3"}
+			res := bwutil.SliceRemove(input, remove)
+			Expect(res).To(Equal(expected))
+		})
+		It("removes first item", func() {
+			input, remove, expected := []string{"1", "2", "3"}, "1", []string{"2", "3"}
+			res := bwutil.SliceRemove(input, remove)
+			Expect(res).To(Equal(expected))
+		})
+		It("removes last item", func() {
+			input, remove, expected := []string{"1", "2", "3"}, "3", []string{"1", "2"}
+			res := bwutil.SliceRemove(input, remove)
+			Expect(res).To(Equal(expected))
+		})
 	})
 })

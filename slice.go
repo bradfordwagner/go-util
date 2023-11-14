@@ -18,3 +18,14 @@ func SliceToMap[A any, K comparable, V any](sa []A, f func(a A) (k K, v V)) (m m
 	}
 	return
 }
+
+// SliceRemove - helper function to remove a value from a slice
+func SliceRemove[A comparable](sa []A, match A) (sb []A) {
+	sb = make([]A, 0, len(sa))
+	for _, a := range sa {
+		if a != match {
+			sb = append(sb, a)
+		}
+	}
+	return
+}

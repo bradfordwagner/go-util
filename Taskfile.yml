@@ -1,0 +1,14 @@
+# https://taskfile.dev
+
+version: '3'
+
+
+tasks:
+  default:
+    cmds:
+      - watchexec -c -r -f "*.go" unbuffer task
+  test:
+    cmds:
+      - go generate ./...
+      - go test ./...
+    silent: true

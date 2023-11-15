@@ -1,5 +1,7 @@
 package bwutil
 
+import "reflect"
+
 // SliceMap - helper function to convert from A to B
 func SliceMap[A any, B any](sa []A, f func(a A) (b B)) (sb []B) {
 	sb = make([]B, len(sa))
@@ -28,4 +30,9 @@ func SliceRemove[A comparable](sa []A, match A) (sb []A) {
 		}
 	}
 	return
+}
+
+// IsSlice - helper function to determine if a value is a slice
+func IsSlice(v interface{}) bool {
+	return reflect.TypeOf(v).Kind() == reflect.Slice
 }

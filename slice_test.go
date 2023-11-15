@@ -60,4 +60,22 @@ var _ = Describe("Slice", func() {
 			Expect(res).To(Equal(expected))
 		})
 	})
+
+	It("IsSlice", func() {
+		type args struct {
+			a    interface{}
+			pass bool
+		}
+		var test = func(args args) {
+			Expect(bwutil.IsSlice(args.a)).To(Equal(args.pass))
+		}
+		test(args{[]string{"a", "b"}, true})
+		test(args{[]int{1, 2, 3}, true})
+		test(args{[]int{}, true})
+		test(args{1, false})
+		test(args{"a", false})
+		type invalid struct{}
+		test(args{invalid{}, false})
+		test(args{[]invalid{}, true})
+	})
 })

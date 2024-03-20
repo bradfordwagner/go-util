@@ -3,3 +3,4 @@ dist
 coverprofile.out
 *.test
 mocks/
+taskfiles/

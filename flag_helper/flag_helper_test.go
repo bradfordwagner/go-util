@@ -6,7 +6,6 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // TestArgs is a struct that will be used to test the flag_helper
@@ -44,8 +43,7 @@ func test[T any](a args[T], r res[T]) {
 	}
 
 	// load env/defaults
-	viper.AutomaticEnv()
-	viper.Unmarshal(&args) // when verbs have divergent args this will need to be moved into cmd specific methods
+	Load(&args)
 
 	var result T = *a.getField(args)
 	Expect(result).To(Equal(r.expected))

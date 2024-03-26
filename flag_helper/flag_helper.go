@@ -31,3 +31,9 @@ func CreateFlag[T any](
 	}
 	viper.BindPFlag(name, flags.Lookup(name))
 }
+
+// Load loads the flags into the viper
+func Load[T any](args *T) {
+	viper.AutomaticEnv()
+	viper.Unmarshal(args) // when verbs have divergent args this will need to be moved into cmd specific methods
+}

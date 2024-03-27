@@ -26,6 +26,9 @@ func CreateFlag[T any](
 	case bool:
 		ref := valRef.(*bool)
 		flags.BoolVarP(ref, name, short, castedDefaultValue, description)
+	case int:
+		ref := valRef.(*int)
+		flags.IntVarP(ref, name, short, castedDefaultValue, description)
 	default:
 		panic("unsupported type")
 	}

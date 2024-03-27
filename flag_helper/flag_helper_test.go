@@ -13,6 +13,7 @@ type TestArgs struct {
 	Hello    string        `mapstructure:"HELLO_WORLD"`
 	Truthy   bool          `mapstructure:"TRUTHY"`
 	Duration time.Duration `mapstructure:"DURATION"`
+	Int      int           `mapstructure:"INT"`
 }
 
 type args[T any] struct {
@@ -159,6 +160,38 @@ var _ = Describe("FlagHelper", func() {
 			},
 			res[time.Duration]{
 				expected: 2 * time.Second,
+			},
+		)
+	})
+	It("int,default=1,env=''", func() {
+		test[int](
+			args[int]{
+				name:         "int",
+				shortFlag:    "i",
+				defaultValue: 1,
+				description:  "int, if not provided (env=INT)",
+				getField:     func(a TestArgs) *int { return &a.Int },
+				envKey:       "",
+				envValue:     "",
+			},
+			res[int]{
+				expected: 1,
+			},
+		)
+	})
+	It("int,default=1,env=2", func() {
+		test[int](
+			args[int]{
+				name:         "int",
+				shortFlag:    "i",
+				defaultValue: 1,
+				description:  "int, if not provided (env=INT)",
+				getField:     func(a TestArgs) *int { return &a.Int },
+				envKey:       "INT",
+				envValue:     "2",
+			},
+			res[int]{
+				expected: 2,
 			},
 		)
 	})

@@ -2,7 +2,8 @@ package bwutil_test
 
 import (
 	"errors"
-	"github.com/bradfordwagner/go-util"
+
+	bwutil "github.com/bradfordwagner/go-util"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
@@ -50,7 +51,7 @@ var _ = Describe("Lockable", func() {
 		It("sets using function, without error", func() {
 			l := bwutil.NewLockable[string]()
 			Expect(l.Get()).To(Equal(""))
-			err := l.SetF(func() (string, error) {
+			err := l.SetF(func(v string) (string, error) {
 				return "hi friends", nil
 			})
 			Expect(err).ShouldNot(HaveOccurred())
@@ -59,7 +60,7 @@ var _ = Describe("Lockable", func() {
 		It("sets using function, and errors", func() {
 			l := bwutil.NewLockable[string]()
 			Expect(l.Get()).To(Equal(""))
-			err := l.SetF(func() (string, error) {
+			err := l.SetF(func(v string) (string, error) {
 				return "no val", errors.New("expected error")
 			})
 			Expect(err.Error()).Should(Equal("expected error"))

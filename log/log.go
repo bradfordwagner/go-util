@@ -42,7 +42,7 @@ func (c *Config) SetLevel(level string) {
 	c.Level = l
 }
 
-func Init(c Config) {
+func Init(conf Config) {
 	encoderCfg := zap.NewProductionEncoderConfig()
 	encoderCfg.TimeKey = "timestamp"
 	encoderCfg.EncodeTime = zapcore.ISO8601TimeEncoder
@@ -50,7 +50,7 @@ func Init(c Config) {
 		EncoderConfig:    encoderCfg,
 		Encoding:         "console",
 		ErrorOutputPaths: []string{"stderr"},
-		Level:            zap.NewAtomicLevelAt(c.Level),
+		Level:            zap.NewAtomicLevelAt(conf.Level),
 		OutputPaths:      []string{"stderr"},
 	}
 	l, _ := c.Build()

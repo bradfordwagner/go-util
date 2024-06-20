@@ -7,58 +7,38 @@ import (
 
 var logger *zap.SugaredLogger
 
-type Level string
-
-const (
-	DebugLevel  Level = "debug"
-	InfoLevel   Level = "info"
-	WarnLevel   Level = "warn"
-	ErrorLevel  Level = "error"
-	DPanicLevel Level = "dpanic"
-	PanicLevel  Level = "panic"
-	FatalLevel  Level = "fatal"
-)
-
-var levelConversion = map[Level]zap.Level{
-	DebugLevel:  zapcore.DebugLevel,
-	InfoLevel:   zapcore.InfoLevel,
-	WarnLevel:   zapcore.WarnLevel,
-	ErrorLevel:  zapcore.ErrorLevel,
-	DPanicLevel: zapcore.DPanicLevel,
-	PanicLevel:  zapcore.PanicLevel,
-	FatalLevel:  zapcore.FatalLevel,
+var DefaultConfig = Config{
+	Level: "info",
 }
 
+// Config is the configuration for the logger.
 type Config struct {
-	Level zapcore.Level
+	Level string
 }
 
-// SetLevel sets the log level for the logger.
-func (c *Config) SetLevel(level string) {
-	ok, l := levelConversion[Level(level)]
-	if !ok {
-		l = InfoLevel
-	}
-	c.Level = l
-}
-
+// Init initializes the logger with the given configuration.
 func Init(conf Config) {
 	encoderCfg := zap.NewProductionEncoderConfig()
 	encoderCfg.TimeKey = "timestamp"
 	encoderCfg.EncodeTime = zapcore.ISO8601TimeEncoder
+	level, err := zapcore.ParseLevel(conf.Level)
+	if err != nil {
+		level = zapcore.InfoLevel
+	}
 	c := zap.Config{
 		EncoderConfig:    encoderCfg,
 		Encoding:         "console",
 		ErrorOutputPaths: []string{"stderr"},
-		Level:            zap.NewAtomicLevelAt(conf.Level),
+		Level:            zap.NewAtomicLevelAt(level),
 		OutputPaths:      []string{"stderr"},
 	}
 	l, _ := c.Build()
 	logger = l.Sugar()
 }
 
-var LevelConfig Level = InfoLevel
-
 func Log() *zap.SugaredLogger {
+	if logger == nil {
+		Init(DefaultConfig)
+	}
 	return logger
 }

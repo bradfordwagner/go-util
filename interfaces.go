@@ -21,3 +21,12 @@ type StubOneOf interface {
 type StubConversionOneOf interface {
 	Invoke(i any)
 }
+
+type TickProvider interface {
+	Create(duration time.Duration) Ticker
+}
+
+type Ticker interface {
+	Chan() <-chan time.Time
+	Stop()
+}

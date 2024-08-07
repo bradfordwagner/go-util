@@ -3,10 +3,9 @@ package bwutil_test
 import (
 	"strconv"
 
+	"github.com/bradfordwagner/go-util/bwutil"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-
-	bwutil "github.com/bradfordwagner/go-util"
 )
 
 var _ = Describe("Slice", func() {

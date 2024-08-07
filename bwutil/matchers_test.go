@@ -1,10 +1,11 @@
 package bwutil_test
 
 import (
-	"github.com/bradfordwagner/go-util"
+	"github.com/bradfordwagner/go-util/bwutil"
 	mock_bwutil "github.com/bradfordwagner/go-util/mocks/bwutil"
-	"github.com/golang/mock/gomock"
+
 	. "github.com/onsi/ginkgo/v2"
+	"go.uber.org/mock/gomock"
 )
 
 var _ = Describe("Matchers", func() {

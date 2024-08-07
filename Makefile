@@ -1,5 +1,5 @@
 install_binaries:
-	go install go.uber.org/mock/mockgen@0.4.0
+	go install go.uber.org/mock/mockgen@v0.4.0
 
 generate_mocks:
 	go generate ./...

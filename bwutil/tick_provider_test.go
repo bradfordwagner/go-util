@@ -8,8 +8,8 @@ import (
 	"time"
 )
 
-var _ = Describe("TickProvider", func() {
-	var provider = NewTickProvider()
+var _ = Describe("TickerProvider", func() {
+	var provider = NewTickerProvider()
 
 	It("should bootstrap", func() { Expect(provider).NotTo(BeNil()) })
 

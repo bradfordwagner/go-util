@@ -5,18 +5,18 @@ import (
 )
 
 /*
-TickProviderImpl - start
+TickerProviderImpl - start
 */
-type TickProviderImpl struct {
+type TickerProviderImpl struct {
 }
 
-// TickProvider - provides a way to create tickers
-func NewTickProvider() TickProvider {
-	return &TickProviderImpl{}
+// NewTickerProvider - provides a way to create tickers
+func NewTickerProvider() TickerProvider {
+	return &TickerProviderImpl{}
 }
 
 // Create - creates a new ticker
-func (t TickProviderImpl) Create(duration time.Duration, f TickFunction) Ticker {
+func (t *TickerProviderImpl) Create(duration time.Duration, f TickFunction) Ticker {
 	return &TickerImpl{t: time.NewTicker(duration), f: f}
 }
 

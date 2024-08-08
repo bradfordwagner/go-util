@@ -24,7 +24,7 @@ type StubConversionOneOf interface {
 
 type TickFunction func(t Ticker)
 
-type TickProvider interface {
+type TickerProvider interface {
 	Create(duration time.Duration, function TickFunction) Ticker
 }
 

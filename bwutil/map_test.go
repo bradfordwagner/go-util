@@ -1,9 +1,9 @@
 package bwutil_test
 
 import (
+	"github.com/bradfordwagner/go-util/bwutil"
 	"reflect"
 
-	bwutil "github.com/bradfordwagner/go-util"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )

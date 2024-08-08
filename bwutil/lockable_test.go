@@ -3,7 +3,7 @@ package bwutil_test
 import (
 	"errors"
 
-	bwutil "github.com/bradfordwagner/go-util"
+	"github.com/bradfordwagner/go-util/bwutil"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )

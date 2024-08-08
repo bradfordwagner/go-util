@@ -22,11 +22,14 @@ type StubConversionOneOf interface {
 	Invoke(i any)
 }
 
+type TickFunction func(t Ticker)
+
 type TickProvider interface {
-	Create(duration time.Duration) Ticker
+	Create(duration time.Duration, function TickFunction) Ticker
 }
 
 type Ticker interface {
 	Chan() <-chan time.Time
+	Start() Ticker
 	Stop()
 }

@@ -13,46 +13,33 @@ var _ = Describe("TickProvider", func() {
 
 	It("should bootstrap", func() { Expect(provider).NotTo(BeNil()) })
 
-	When("creating a ticker", func() {
-		It("ticker should tick", func() {
-			t := time.Millisecond * 20
-			ticker := provider.Create(t)
-			Expect(ticker).ShouldNot(BeNil())
-
-			wg := new(sync.WaitGroup)
-			wg.Add(1)
-			go func() {
+	It("waits one tick for it to be completed", func() {
+		wg := new(sync.WaitGroup)
+		wg.Add(1)
+		provider.Create(time.Millisecond*20, func(t Ticker) {
+			for {
 				select {
-				case <-ticker.Chan():
+				case <-t.Chan():
 					wg.Done()
+					t.Stop()
 				}
-			}()
-			wg.Wait()
-		})
-		It("closed", func() {
-			t := time.Millisecond * 20
-			ticker := provider.Create(t)
-			Expect(ticker).ShouldNot(BeNil())
+			}
+		}).Start()
+		wg.Wait()
+	})
 
-			wg := new(sync.WaitGroup)
-			// force a failure if wg.Done is called more than once (we canceled the ticker)
-			wg.Add(1)
-			ctx, _ := context.WithTimeout(context.TODO(), time.Millisecond*50)
-			go func() {
-				for {
-					select {
-					case <-ticker.Chan():
-						ticker.Stop()
-						// if this is called twice it will panic
-						wg.Done()
-					case <-ctx.Done():
-						return
-					}
+	It("stops when a context is canceled", func() {
+		ctx, _ := context.WithTimeout(context.Background(), time.Millisecond*40)
+		ticker := provider.Create(time.Millisecond*20, func(t Ticker) {
+			for {
+				select {
+				case <-ctx.Done():
+					t.Stop()
+					return
 				}
-			}()
-			wg.Wait()
-			Eventually(ctx.Done).Should(BeClosed())
-		})
-
+			}
+		}).Start()
+		// wait for context cancel
+		<-ticker.Chan()
 	})
 })

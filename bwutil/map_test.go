@@ -48,16 +48,15 @@ var _ = Describe("Map", func() {
 
 	Context("MapKeys", func() {
 		It("returns keys", func() {
-			m := map[int]int{
-				5: 5,
-				4: 4,
-				3: 3,
-				2: 2,
-				1: 1,
-				0: 0,
+			m := map[int]string{
+				1: "one",
+				2: "two",
+				3: "three",
+				4: "four",
+				5: "five",
 			}
-			s := bwutil.MapKeys(m)
-			Expect(s).To(ConsistOf(0, 1, 2, 3, 4, 5))
+			keys := bwutil.MapKeys(m)
+			Expect(keys).To(ConsistOf(1, 2, 3, 4, 5))
 		})
 	})
 })

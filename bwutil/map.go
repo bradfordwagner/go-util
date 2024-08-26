@@ -31,3 +31,12 @@ func ToSortedSliceByKey[k cmp.Ordered, v any](m map[k]v) (res []v) {
 
 	return
 }
+
+// MapKeys - return a slice of keys from a map
+func MapKeys[k comparable, v any](m map[k]v) (res []k) {
+	res = make([]k, 0, len(m))
+	for k, _ := range m {
+		res = append(res, k)
+	}
+	return
+}

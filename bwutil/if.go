@@ -7,3 +7,9 @@ func If[T any](check bool, t, f T) (v T) {
 	}
 	return
 }
+
+func IfDo(check bool, f func()) {
+	if check {
+		f()
+	}
+}

@@ -17,4 +17,21 @@ var _ = Describe("If", func() {
 		res := bwutil.If(false, a, b)
 		Expect(res).To(Equal(b))
 	})
+
+	Context("IfDo", func() {
+		It("adds to a slice if true", func() {
+			s := []int{}
+			bwutil.IfDo(true, func() {
+				s = append(s, 1)
+			})
+			Expect(s).To(Equal([]int{1}))
+		})
+		It("does not add to a slice if false", func() {
+			s := []int{}
+			bwutil.IfDo(false, func() {
+				s = append(s, 1)
+			})
+			Expect(s).To(Equal([]int{}))
+		})
+	})
 })
